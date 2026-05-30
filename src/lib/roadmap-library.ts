@@ -1,4 +1,6 @@
 import type { RoadmapBlockCategory } from "./types";
+// Re-export so roadmap-* modules can import the category union from one place.
+export type { RoadmapBlockCategory } from "./types";
 
 /**
  * Suggested ministry building blocks for Long Hill Chapel. These are OPTIONS,

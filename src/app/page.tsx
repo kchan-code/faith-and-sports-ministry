@@ -304,6 +304,9 @@ export default function LandingPage() {
             Sports Family Ministry — a church-led initiative serving sports families with wisdom,
             grace, and practical care.
           </p>
+          <a href="/roadmap" className="text-[12px] text-white/[0.3] underline-offset-4 hover:text-navy-ink hover:underline">
+            Ministry team — planning roadmap
+          </a>
         </Section>
       </footer>
     </main>

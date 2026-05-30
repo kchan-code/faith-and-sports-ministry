@@ -1,43 +1,19 @@
-import { listInitiatives, getRoadmapByInitiative } from "@/lib/store";
-import { PageHeader, EmptyState, LinkButton } from "@/components/ui";
-import { RoadmapBuilder } from "./RoadmapBuilder";
+import { getRoadmap } from "@/lib/roadmap-store";
+import { BLOCK_LIBRARY } from "@/lib/roadmap-library";
+import { RoadmapBoard } from "./RoadmapBoard";
 
-export default async function RoadmapPage({
-  searchParams,
-}: {
-  searchParams: Promise<{ category?: string }>;
-}) {
-  const { category } = await searchParams;
-  const initiative = listInitiatives()[0];
+// Always read the latest shared document (it's a single, mutable doc).
+export const dynamic = "force-dynamic";
 
-  if (!initiative) {
-    return (
-      <div className="space-y-6">
-        <PageHeader title="Roadmap Builder" />
-        <EmptyState
-          title="No initiative yet"
-          hint="Create an initiative first, then build its ministry roadmap."
-          action={<LinkButton href="/initiatives/new">Create initiative</LinkButton>}
-        />
-      </div>
-    );
-  }
-
-  const roadmap = getRoadmapByInitiative(initiative.id);
+export default async function RoadmapPage() {
+  const roadmap = await getRoadmap();
+  const library = BLOCK_LIBRARY.map((b) => ({ id: b.id, title: b.title, category: b.category }));
 
   return (
-    <div className="space-y-6">
-      <PageHeader
-        title="Build Your Ministry Plan"
-        subtitle="A simple, flexible plan for Long Hill Chapel — pick a starting plan, then add, edit, reorder, or remove steps. There is no single required path, and your work saves automatically."
-      />
-      <RoadmapBuilder
-        initiativeId={initiative.id}
-        initialBlocks={roadmap?.blocks ?? []}
-        initialTemplateName={roadmap?.templateName}
-        initialNotes={roadmap?.notes ?? ""}
-        initialCategory={category ?? "all"}
-      />
-    </div>
+    <main className="min-h-screen bg-onyx font-body text-clean">
+      <div className="mx-auto w-full max-w-3xl px-5 py-10">
+        <RoadmapBoard initial={roadmap} library={library} />
+      </div>
+    </main>
   );
 }
