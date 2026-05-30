@@ -1,5 +1,8 @@
 # Faith &amp; Sports Ministry — Planning System
 
+> 🧭 **Coordinating this ministry with an LLM?** Start with [`HANDOFF.md`](HANDOFF.md) — it tells a
+> fresh model what we're trying to do and how to help drive what's next.
+
 An **internal, AI-assisted ministry planning tool** for **Long Hill Chapel (Chatham, NJ)** to
 launch a community-facing **sports-family ministry**. It is *not* a family-facing chatbot — it is a
 behind-the-scenes planning, content, logistics, and follow-up workspace for church staff and
