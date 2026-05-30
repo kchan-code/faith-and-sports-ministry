@@ -2,227 +2,127 @@ import Link from "next/link";
 import {
   listInitiatives,
   listEvents,
-  listContent,
   listReviews,
   listEventsByInitiative,
-  getContent,
 } from "@/lib/store";
-import { titleCase, formatDateTime, STATUS_TONE } from "@/lib/format";
-import {
-  PageHeader,
-  Card,
-  CardHeader,
-  CardBody,
-  Badge,
-  LinkButton,
-  EmptyState,
-} from "@/components/ui";
+import { formatDateTime } from "@/lib/format";
+import { PageHeader, Card, CardBody, Badge } from "@/components/ui";
 
-function phaseLabel(phase: string): string {
-  return titleCase(phase.replace(/^phase_\d+_/, ""));
-}
-
-function StatCard({ label, value }: { label: string; value: number }) {
-  return (
-    <Card>
-      <CardBody>
-        <div className="text-3xl font-semibold text-slate-900">{value}</div>
-        <div className="mt-1 text-sm text-slate-500">{label}</div>
-      </CardBody>
-    </Card>
-  );
-}
-
-function AssetCard({
+// One big, obvious action. The whole card is tappable (good on a phone).
+function ActionCard({
+  href,
   title,
   text,
-  cta,
-  href,
+  badge,
 }: {
+  href: string;
   title: string;
   text: string;
-  cta: string;
-  href: string;
+  badge?: string;
 }) {
   return (
-    <Card className="flex h-full flex-col">
-      <CardBody className="flex flex-1 flex-col">
-        <h3 className="font-semibold text-ink">{title}</h3>
-        <p className="mt-1.5 flex-1 text-sm text-ink-muted">{text}</p>
-        <div className="mt-4">
-          <LinkButton href={href} variant="secondary">
-            {cta}
-          </LinkButton>
-        </div>
-      </CardBody>
-    </Card>
+    <Link href={href} className="block">
+      <Card className="h-full transition hover:border-brand-300 hover:shadow">
+        <CardBody className="flex h-full flex-col">
+          <div className="flex items-center justify-between gap-2">
+            <h2 className="text-lg font-semibold text-ink">{title}</h2>
+            {badge ? <Badge tone="amber">{badge}</Badge> : null}
+          </div>
+          <p className="mt-1.5 flex-1 text-sm leading-relaxed text-ink-muted">{text}</p>
+          <div className="mt-4 text-sm font-semibold text-brand-700">Go →</div>
+        </CardBody>
+      </Card>
+    </Link>
   );
 }
 
 export default async function DashboardPage() {
-  const initiatives = listInitiatives();
-  const events = listEvents();
-  const content = listContent();
-  const pendingReviews = listReviews().filter((r) => r.decision === "pending");
+  const initiative = listInitiatives()[0];
+  const pending = listReviews().filter((r) => r.decision === "pending").length;
 
-  const upcomingEvents = [...events].sort((a, b) => {
-    const da = a.date ?? "";
-    const db = b.date ?? "";
-    if (da && db) return da.localeCompare(db);
-    if (da) return -1;
-    if (db) return 1;
-    return 0;
-  });
+  const events = initiative ? listEventsByInitiative(initiative.id) : listEvents();
+  const upcoming = [...events]
+    .filter((e) => e.date)
+    .sort((a, b) => (a.date ?? "").localeCompare(b.date ?? ""))[0];
 
   return (
     <div className="space-y-8">
       <PageHeader
-        title="Long Hill Chapel — Planning Dashboard"
-        subtitle="Plan a sports-family ministry using the church's pastoral trust, its gym, and access to NY/NJ sports leaders. Start with one small meeting, then let it grow."
-        action={<LinkButton href="/roadmap">Open the Ministry Plan</LinkButton>}
+        title="Welcome"
+        subtitle="What would you like to do today? Pick one — you can always come back here."
       />
 
-      {/* Long Hill Chapel unique-asset cards */}
-      <div className="grid gap-4 md:grid-cols-3">
-        <AssetCard
-          title="Use Long Hill Chapel's unique assets"
-          text="Build a ministry plan that reflects the church's gym, local relationships, pastoral care, and access to NY/NJ sports leaders. Start with an example plan, make it your own, and print it for leadership discussion."
-          cta="Open the Ministry Plan"
+      {/* Start here — the few main things, big and obvious */}
+      <div className="grid gap-4 sm:grid-cols-2">
+        <ActionCard
           href="/roadmap"
+          title="Build your ministry plan"
+          text="Lay out the events and steps for serving sports families. Start from an example and make it your own."
         />
-        <AssetCard
-          title="Gym-enabled ministry ideas"
-          text="Use the gym for athlete reset workshops, parent-athlete nights, open gym conversation events, coach gatherings, and movement-and-mindset clinics."
-          cta="See gym-based steps"
-          href="/roadmap?category=gym_based"
+        <ActionCard
+          href="/events"
+          title="Plan an event"
+          text="Set up a parents' night, athlete workshop, or coach breakfast — with an agenda, handouts, and follow-up."
         />
-        <AssetCard
-          title="Invite trusted sports leaders"
-          text="Use local NY/NJ sports relationships to bring credibility and practical wisdom while keeping the ministry centered on faith, family, and formation."
-          cta="View Speaker & Partner Ideas"
-          href="/speakers"
+        <ActionCard
+          href="/reviews"
+          title="Review content"
+          text="Give faith content and sensitive topics a second look before they go out."
+          badge={pending > 0 ? `${pending} waiting` : undefined}
+        />
+        <ActionCard
+          href="/library"
+          title="Saved materials"
+          text="Reuse talks, handouts, and emails your team has already approved."
         />
       </div>
 
-      <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
-        <StatCard label="Initiatives" value={initiatives.length} />
-        <StatCard label="Events" value={events.length} />
-        <StatCard label="Content items" value={content.length} />
-        <StatCard label="Pending reviews" value={pendingReviews.length} />
-      </div>
-
-      <Card>
-        <CardHeader title="Your initiatives" />
-        <CardBody>
-          {initiatives.length === 0 ? (
-            <EmptyState
-              title="No initiatives yet"
-              hint="Begin with one small meeting and grow from there."
-              action={<LinkButton href="/initiatives/new">Create your first initiative</LinkButton>}
-            />
-          ) : (
-            <div className="grid gap-4 md:grid-cols-2">
-              {initiatives.map((initiative) => {
-                const eventCount = listEventsByInitiative(initiative.id).length;
-                return (
-                  <Link
-                    key={initiative.id}
-                    href={`/initiatives/${initiative.id}`}
-                    className="block rounded-lg border border-slate-200 p-4 transition hover:border-slate-300 hover:bg-slate-50"
-                  >
-                    <div className="flex items-start justify-between gap-3">
-                      <h3 className="font-semibold text-slate-900">{initiative.name}</h3>
-                      <Badge tone={STATUS_TONE[initiative.status] ?? "gray"}>
-                        {titleCase(initiative.status)}
-                      </Badge>
-                    </div>
-                    <div className="mt-2 text-sm text-slate-500">
-                      {phaseLabel(initiative.currentPhase)}
-                    </div>
-                    {initiative.focusAreas.length > 0 && (
-                      <div className="mt-3 flex flex-wrap gap-1.5">
-                        {initiative.focusAreas.map((area) => (
-                          <Badge key={area} tone="brand">
-                            {titleCase(area)}
-                          </Badge>
-                        ))}
-                      </div>
-                    )}
-                    <div className="mt-3 text-xs text-slate-400">
-                      {eventCount} {eventCount === 1 ? "event" : "events"}
-                    </div>
-                  </Link>
-                );
-              })}
+      {/* Light at-a-glance — not a wall of numbers */}
+      {initiative ? (
+        <Card>
+          <CardBody className="space-y-4">
+            <div>
+              <div className="text-xs font-semibold uppercase tracking-wide text-slate-400">
+                Your ministry
+              </div>
+              <Link
+                href={`/initiatives/${initiative.id}`}
+                className="mt-0.5 inline-block text-base font-semibold text-ink hover:text-brand-700"
+              >
+                {initiative.name}
+              </Link>
             </div>
-          )}
-        </CardBody>
-      </Card>
 
-      <Card>
-        <CardHeader title="Upcoming & recent events" />
-        <CardBody>
-          {upcomingEvents.length === 0 ? (
-            <EmptyState title="No events yet" hint="Plan a meeting or workshop from within an initiative." />
-          ) : (
-            <ul className="divide-y divide-slate-100">
-              {upcomingEvents.map((event) => (
-                <li key={event.id}>
-                  <Link
-                    href={`/events/${event.id}`}
-                    className="flex items-center justify-between gap-3 py-3 transition hover:bg-slate-50"
-                  >
-                    <div className="min-w-0">
-                      <div className="truncate font-medium text-slate-900">{event.title}</div>
-                      <div className="mt-1 flex flex-wrap items-center gap-1.5">
-                        <Badge tone="gray">{titleCase(event.type)}</Badge>
-                        <Badge tone={STATUS_TONE[event.status] ?? "gray"}>
-                          {titleCase(event.status)}
-                        </Badge>
-                      </div>
-                    </div>
-                    <div className="shrink-0 text-sm text-slate-500">{formatDateTime(event.date)}</div>
+            <div className="grid gap-4 sm:grid-cols-2">
+              <div className="rounded-lg border border-slate-100 p-3">
+                <div className="text-xs font-medium text-slate-500">Next event</div>
+                {upcoming ? (
+                  <Link href={`/events/${upcoming.id}`} className="mt-1 block">
+                    <div className="font-medium text-ink hover:text-brand-700">{upcoming.title}</div>
+                    <div className="mt-0.5 text-sm text-slate-500">{formatDateTime(upcoming.date)}</div>
                   </Link>
-                </li>
-              ))}
-            </ul>
-          )}
-        </CardBody>
-      </Card>
+                ) : (
+                  <div className="mt-1 text-sm text-slate-500">
+                    Nothing scheduled yet —{" "}
+                    <Link href="/events" className="text-brand-700 hover:underline">plan one</Link>.
+                  </div>
+                )}
+              </div>
 
-      <Card>
-        <CardHeader title="Needs your attention" subtitle="Content awaiting review" />
-        <CardBody>
-          {pendingReviews.length === 0 ? (
-            <EmptyState title="Nothing pending" hint="All reviews are up to date." />
-          ) : (
-            <ul className="divide-y divide-slate-100">
-              {pendingReviews.map((review) => {
-                const item = getContent(review.contentItemId);
-                const href = review.kind === "theology" ? "/reviews/theology" : "/reviews/pastoral";
-                return (
-                  <li key={review.id}>
-                    <Link
-                      href={href}
-                      className="flex items-center justify-between gap-3 py-3 transition hover:bg-slate-50"
-                    >
-                      <div className="flex min-w-0 items-center gap-2">
-                        <Badge tone={review.kind === "theology" ? "blue" : "amber"}>
-                          {titleCase(review.kind)}
-                        </Badge>
-                        <span className="truncate font-medium text-slate-900">
-                          {item ? item.title : "Untitled content"}
-                        </span>
-                      </div>
-                      <span className="shrink-0 text-sm text-slate-500">Review</span>
-                    </Link>
-                  </li>
-                );
-              })}
-            </ul>
-          )}
-        </CardBody>
-      </Card>
+              <div className="rounded-lg border border-slate-100 p-3">
+                <div className="text-xs font-medium text-slate-500">Waiting on you</div>
+                {pending > 0 ? (
+                  <Link href="/reviews" className="mt-1 block font-medium text-ink hover:text-brand-700">
+                    {pending} item{pending === 1 ? "" : "s"} to review →
+                  </Link>
+                ) : (
+                  <div className="mt-1 text-sm text-emerald-600">Nothing — you&apos;re all caught up.</div>
+                )}
+              </div>
+            </div>
+          </CardBody>
+        </Card>
+      ) : null}
     </div>
   );
 }
