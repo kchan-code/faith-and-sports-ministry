@@ -103,11 +103,12 @@ export function CreateEventForm({
             </select>
           </Field>
 
-          <Field label="Title">
+          <Field label="Title" hint="Required">
             <input
               className={inputClass}
               value={title}
               onChange={(e) => setTitle(e.target.value)}
+              placeholder="e.g. Parents' Night at the Gym"
               required
             />
           </Field>
@@ -126,25 +127,24 @@ export function CreateEventForm({
             </select>
           </Field>
 
-          <Field label="Goal">
+          <Field label="Goal" hint="Required — what is the one thing people take home?">
             <textarea
               className={inputClass}
               rows={3}
               value={goal}
               onChange={(e) => setGoal(e.target.value)}
+              placeholder="e.g. Give parents one simple way to lower pressure on the car ride home."
               required
             />
           </Field>
 
-          <Field label="Audience">
-            <div className="flex flex-wrap gap-3">
+          <Field label="Who is it for?" hint="Choose all that apply">
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
               {AUDIENCE_SEGMENTS.map((segment) => (
-                <label
-                  key={segment}
-                  className="flex items-center gap-2 text-sm text-gray-700"
-                >
+                <label key={segment} className="flex items-center gap-2 text-base text-gray-700">
                   <input
                     type="checkbox"
+                    className="h-5 w-5"
                     checked={audience.includes(segment)}
                     onChange={() => toggleAudience(segment)}
                   />
@@ -154,15 +154,13 @@ export function CreateEventForm({
             </div>
           </Field>
 
-          <Field label="Focus Areas">
-            <div className="flex flex-wrap gap-3">
+          <Field label="What is it about?" hint="Choose all that apply">
+            <div className="flex flex-wrap gap-x-4 gap-y-2">
               {FOCUS_AREAS.map((area) => (
-                <label
-                  key={area}
-                  className="flex items-center gap-2 text-sm text-gray-700"
-                >
+                <label key={area} className="flex items-center gap-2 text-base text-gray-700">
                   <input
                     type="checkbox"
+                    className="h-5 w-5"
                     checked={focusAreas.includes(area)}
                     onChange={() => toggleFocus(area)}
                   />
@@ -181,7 +179,7 @@ export function CreateEventForm({
             />
           </Field>
 
-          <Field label="Location" hint="Optional">
+          <Field label="Location" hint="Optional — e.g. Long Hill Chapel gym">
             <input
               className={inputClass}
               value={location}

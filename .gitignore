@@ -8,7 +8,8 @@ out
 next-env.d.ts
 .DS_Store
 
-# Local agent/tooling state
-.claude/
+# Local agent/tooling state (but share reusable agent definitions)
+.claude/*
+!.claude/agents/
 *.lock
 !package-lock.json

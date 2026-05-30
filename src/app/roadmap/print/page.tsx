@@ -14,7 +14,7 @@ export default async function RoadmapPrintPage() {
     <div className="mx-auto max-w-3xl">
       <div className="mb-6 flex items-center justify-between gap-3 print:hidden">
         <Link href="/roadmap" className="text-sm text-brand-700 hover:underline">
-          ← Back to builder
+          ← Back to your plan
         </Link>
         <PrintButton />
       </div>

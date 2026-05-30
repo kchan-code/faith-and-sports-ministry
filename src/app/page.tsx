@@ -36,7 +36,7 @@ export default function LandingPage() {
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <CTA href="/dashboard">Enter the Planning Dashboard</CTA>
-          <CTA href="/roadmap" variant="secondary">Build the Ministry Roadmap</CTA>
+          <CTA href="/roadmap" variant="secondary">Build your ministry plan</CTA>
         </div>
         <p className="mt-4 text-xs text-ink-muted">
           Built for church leaders, pastors, ministry staff, and volunteers — not as a family-facing
@@ -149,11 +149,11 @@ export default function LandingPage() {
       <section className="grid gap-6 md:grid-cols-2">
         <Card>
           <CardBody>
-            <SectionTitle>A flexible ministry roadmap</SectionTitle>
+            <SectionTitle>A flexible ministry plan</SectionTitle>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-              The dashboard helps leaders build a roadmap from reorderable, editable building blocks.
-              Choose a starter template, then customize it — add blocks, reorder them, edit titles and
-              descriptions, add your own, and remove what doesn&apos;t fit.
+              The dashboard helps leaders build a plan from simple, editable steps. Choose a starting
+              plan, then make it your own — add steps, reorder them, edit the wording, add your own,
+              and remove what doesn&apos;t fit. Everything saves automatically.
             </p>
           </CardBody>
         </Card>
@@ -161,9 +161,9 @@ export default function LandingPage() {
           <CardBody>
             <SectionTitle>Choose, reorder, customize, export</SectionTitle>
             <p className="mt-3 text-sm leading-relaxed text-ink-muted">
-              When the roadmap fits Long Hill Chapel&apos;s relationships, leadership capacity, gym
-              availability, and community needs, export or print it as a PDF for leadership
-              discussion. Adjust it as the ministry learns from families, leaders, and partners.
+              When the plan fits Long Hill Chapel&apos;s relationships, leadership capacity, gym
+              availability, and community needs, print it as a PDF for leadership discussion. Adjust
+              it as the ministry learns from families, leaders, and partners.
             </p>
             <div className="mt-4">
               <CTA href="/roadmap">Build the Ministry Roadmap</CTA>

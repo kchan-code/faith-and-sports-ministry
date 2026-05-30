@@ -28,13 +28,8 @@ export default async function RoadmapPage({
   return (
     <div className="space-y-6">
       <PageHeader
-        title="Ministry Roadmap Builder"
-        subtitle="Reorderable, editable building blocks for Long Hill Chapel. Choose a starter template, then customize it — there is no single required path."
-        action={
-          <LinkButton href="/roadmap/print" variant="secondary">
-            Print / Export PDF
-          </LinkButton>
-        }
+        title="Build Your Ministry Plan"
+        subtitle="A simple, flexible plan for Long Hill Chapel — pick a starting plan, then add, edit, reorder, or remove steps. There is no single required path, and your work saves automatically."
       />
       <RoadmapBuilder
         initiativeId={initiative.id}

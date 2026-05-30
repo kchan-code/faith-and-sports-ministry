@@ -79,21 +79,21 @@ export default async function DashboardPage() {
       <PageHeader
         title="Long Hill Chapel — Planning Dashboard"
         subtitle="Plan a sports-family ministry using the church's pastoral trust, its gym, and access to NY/NJ sports leaders. Start with one small meeting, then let it grow."
-        action={<LinkButton href="/roadmap">Open Roadmap Builder</LinkButton>}
+        action={<LinkButton href="/roadmap">Open the Ministry Plan</LinkButton>}
       />
 
       {/* Long Hill Chapel unique-asset cards */}
       <div className="grid gap-4 md:grid-cols-3">
         <AssetCard
           title="Use Long Hill Chapel's unique assets"
-          text="Build a ministry roadmap that reflects the church's gym, local relationships, pastoral care, and access to NY/NJ sports leaders. Start with a template, customize the boxes, and export a PDF for leadership discussion."
-          cta="Open Roadmap Builder"
+          text="Build a ministry plan that reflects the church's gym, local relationships, pastoral care, and access to NY/NJ sports leaders. Start with an example plan, make it your own, and print it for leadership discussion."
+          cta="Open the Ministry Plan"
           href="/roadmap"
         />
         <AssetCard
           title="Gym-enabled ministry ideas"
           text="Use the gym for athlete reset workshops, parent-athlete nights, open gym conversation events, coach gatherings, and movement-and-mindset clinics."
-          cta="View Gym-Based Blocks"
+          cta="See gym-based steps"
           href="/roadmap?category=gym_based"
         />
         <AssetCard

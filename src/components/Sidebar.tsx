@@ -8,7 +8,7 @@ const NAV: { group: string; items: { href: string; label: string }[] }[] = [
     group: "Plan",
     items: [
       { href: "/dashboard", label: "Dashboard" },
-      { href: "/roadmap", label: "Roadmap Builder" },
+      { href: "/roadmap", label: "Ministry Plan" },
       { href: "/initiatives", label: "Initiatives" },
       { href: "/events", label: "Events" },
     ],
