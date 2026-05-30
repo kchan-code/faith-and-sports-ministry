@@ -45,7 +45,7 @@ cp .env.example .env.local
 ## Deployment
 
 - **Live (production):** https://faith-and-sports-ministry.vercel.app
-- **Repo:** https://github.com/kchan-code/faith-and-sports-ministry (private)
+- **Repo:** https://github.com/kchan-code/faith-and-sports-ministry (public)
 - **Vercel project:** `kchan-8826s-projects/faith-and-sports-ministry` — the GitHub repo is
   connected, so pushes to `main` auto-deploy (production), and PRs get preview URLs.
 
