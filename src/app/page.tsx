@@ -155,13 +155,14 @@ export default function LandingPage() {
               "radial-gradient(120% 80% at 30% 0%, rgba(79,121,201,0.10), transparent 60%), var(--fv-charcoal)",
           }}
         >
-          <div className="fv-verse-ref mb-4">Romans 8:37</div>
+          <div className="fv-verse-ref mb-4">Galatians 2:20</div>
           <p className="fv-scripture max-w-2xl text-2xl sm:text-3xl">
-            In all these things we are more than conquerors through him who loved us.
+            The life I now live in the body, I live by faith in the Son of God, who loved me and gave
+            himself for me.
           </p>
           <p className="mt-6 max-w-2xl text-[15px] leading-relaxed text-white/[0.6]">
-            We operate <span className="font-semibold text-clean">from</span> Christ&apos;s victory,
-            not <span className="font-semibold text-clean">for</span> it. A child&apos;s worth — and a
+            We live <span className="font-semibold text-clean">from</span> Christ&apos;s love, not
+            <span className="font-semibold text-clean"> for</span> it. A child&apos;s worth — and a
             parent&apos;s — is settled in Christ before the game ever starts. The scoreboard can
             report what happened; it cannot name who we are.
           </p>
