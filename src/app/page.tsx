@@ -172,7 +172,7 @@ export default function LandingPage() {
       <Section className="py-20">
         <Eyebrow>Why Long Hill Chapel</Eyebrow>
         <h2 className="max-w-3xl font-heading text-2xl font-semibold leading-snug tracking-tight sm:text-[32px]">
-          We bring together three things many churches cannot.
+          We bring together three things that make this possible.
         </h2>
         <div className="mt-10 grid gap-5 md:grid-cols-3">
           {ASSETS.map((a) => (
