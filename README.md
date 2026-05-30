@@ -42,6 +42,26 @@ cp .env.example .env.local
 # MINISTRY_MODEL=anthropic/claude-sonnet-4-6
 ```
 
+## Deployment
+
+- **Live (production):** https://faith-and-sports-ministry.vercel.app
+- **Repo:** https://github.com/kchan-code/faith-and-sports-ministry (private)
+- **Vercel project:** `kchan-8826s-projects/faith-and-sports-ministry` — the GitHub repo is
+  connected, so pushes to `main` auto-deploy (production), and PRs get preview URLs.
+
+Deploys run with **zero env vars** (offline-draft mode). To enable live AI generation, add the
+gateway key to the project:
+
+```bash
+vercel env add AI_GATEWAY_API_KEY production
+vercel env add MINISTRY_THEOLOGY_MODEL production   # optional, e.g. anthropic/claude-opus-4-8
+vercel --prod                                       # redeploy to pick them up
+```
+
+> Deployment-specific URLs are protected by Vercel Authentication; the production domain above is
+> public. If you want the whole tool behind login (reasonable for an internal church tool), enable
+> Deployment Protection for production in the Vercel project settings.
+
 ## The agents
 
 | Agent | Role |
