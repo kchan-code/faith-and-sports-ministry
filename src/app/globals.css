@@ -1,23 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;700;800;900&family=Sora:wght@300;400;500;600;700;800&family=Manrope:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,500;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+/* ============================================================
+   FAITH IN SPORTS FAMILY MINISTRY — design tokens
+   Dark-mode-first, premium athletic. Onyx black + brand navy #183060
+   (matched to Long Hill Chapel / lhcnj.net). Navy + white only.
+   ============================================================ */
 :root {
-  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --fv-onyx: #050505;
+  --fv-charcoal: #101010;
+  --fv-surface-1: #151515;
+  --fv-surface-2: #1c1c1c;
+  --fv-hairline: rgba(247, 247, 247, 0.08);
+  --fv-hairline-2: rgba(247, 247, 247, 0.14);
+  --fv-overlay: rgba(5, 5, 5, 0.72);
+
+  --fv-white: #f7f7f7;
+  --fv-mute-1: rgba(247, 247, 247, 0.72);
+  --fv-mute-2: rgba(247, 247, 247, 0.48);
+  --fv-mute-3: rgba(247, 247, 247, 0.28);
+
+  --fv-navy: #183060;
+  --fv-navy-600: #1f3d78;
+  --fv-navy-bright: #4f79c9;
+  --fv-navy-deep: #0e2148;
+  --fv-navy-ink: #8aa9e0;
+  --fv-navy-ink-2: #b9cbec;
+  --fv-navy-soft: rgba(79, 121, 201, 0.16);
+
+  --bg: var(--fv-onyx);
+  --bg-elev-1: var(--fv-charcoal);
+  --bg-elev-2: var(--fv-surface-1);
+  --fg: var(--fv-white);
+  --fg-2: var(--fv-mute-1);
+  --fg-3: var(--fv-mute-2);
+  --accent: var(--fv-navy);
+  --accent-ink: var(--fv-navy-ink);
+  --accent-hot: var(--fv-navy-bright);
+  --on-accent: var(--fv-white);
+  --link: var(--fv-navy-ink);
+  --border: var(--fv-hairline);
+  --border-strong: var(--fv-hairline-2);
+
+  --r-md: 14px;
+  --r-lg: 20px;
+  --r-xl: 28px;
+  --r-pill: 999px;
+
+  --shadow-glow-navy: 0 0 0 1px rgba(79, 121, 201, 0.5), 0 12px 40px -12px rgba(79, 121, 201, 0.4);
+
+  --ease-out: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --d-fast: 140ms;
+
+  --font-display: 'Big Shoulders Display', 'Saira Condensed', Impact, sans-serif;
+  --font-heading: 'Sora', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-body: 'Manrope', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-scripture: 'Source Serif 4', Georgia, serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, monospace;
 }
 
+html,
 body {
-  @apply bg-slate-50 text-ink antialiased;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
 }
 
-/* Lightweight prose styling for rendered Markdown content. */
+/* Brand helper classes (mirrors colors_and_type.css) */
+.fv-eyebrow {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.18em;
+  color: var(--accent-ink);
+}
+.fv-scripture {
+  font-family: var(--font-scripture);
+  line-height: 1.7;
+  color: var(--fg);
+  font-weight: 400;
+  text-wrap: pretty;
+}
+.fv-verse-ref {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  color: var(--accent-ink);
+  text-transform: uppercase;
+}
+.fv-micro {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.16em;
+  color: var(--fg-3);
+}
+::selection {
+  background: var(--fv-navy-soft);
+  color: var(--fg);
+}
+
+/* Lightweight prose styling for rendered Markdown content (dormant pages). */
 .prose-ministry h1 { @apply text-xl font-bold mt-4 mb-2; }
 .prose-ministry h2 { @apply text-lg font-semibold mt-4 mb-1.5; }
 .prose-ministry h3 { @apply text-base font-semibold mt-3 mb-1; }
 .prose-ministry p { @apply my-2 leading-relaxed; }
 .prose-ministry ul { @apply list-disc pl-5 my-2 space-y-1; }
 .prose-ministry ol { @apply list-decimal pl-5 my-2 space-y-1; }
-.prose-ministry blockquote { @apply border-l-4 border-brand-200 pl-3 italic text-ink-muted my-2; }
+.prose-ministry blockquote { @apply border-l-4 border-brand-200 pl-3 italic my-2; }
 .prose-ministry code { @apply bg-slate-100 px-1 py-0.5 rounded text-sm; }
 .prose-ministry strong { @apply font-semibold; }
 .prose-ministry hr { @apply my-4 border-slate-200; }
