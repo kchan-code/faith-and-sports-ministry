@@ -51,6 +51,41 @@ const FLAG_PRESETS: { label: string; flag: Omit<ReviewFlag, never> }[] = [
       leaderGuidance: "Stay neutral and caring; refer to pastoral care.",
     },
   },
+  {
+    label: "Gym supervision",
+    flag: {
+      area: "Gym supervision & minors",
+      severity: "high",
+      note: "Gym-based event involving minors and physical activity.",
+      leaderGuidance:
+        "Ensure adult-to-minor ratios, check-in/check-out, no unsupervised one-on-one adult/minor interaction, and a clear injury/emergency process. Confirm volunteer screening.",
+    },
+  },
+  {
+    label: "Outside coach boundaries",
+    flag: {
+      area: "Outside coach / sports leader",
+      severity: "caution",
+      note: "An outside coach or sports leader will interact with attendees.",
+      leaderGuidance:
+        "Set clear rules for outside leaders, confirm they are never alone with minors, and brief them on the ministry's tone and boundaries.",
+    },
+  },
+];
+
+/** Gym & child-protection checklist shown on every pastoral safety review. */
+const GYM_SAFETY_ITEMS = [
+  "Gym supervision & adult-to-minor ratios",
+  "Adult-to-minor boundaries — no unsupervised one-on-one",
+  "Check-in / check-out process",
+  "Injury response & emergency contacts",
+  "Volunteer screening",
+  "Bathroom / changing area rules",
+  "Photo / video permission",
+  "Clear rules for outside coaches or sports leaders",
+  "Waivers if needed",
+  "Insurance review if needed",
+  "Event-specific risk review",
 ];
 
 export default async function PastoralReviewQueuePage() {
@@ -68,6 +103,28 @@ export default async function PastoralReviewQueuePage() {
         title="Pastoral Safety Review Queue"
         subtitle="Flag sensitive areas and add leader guidance. Never diagnose or counsel."
       />
+
+      <Card>
+        <CardHeader
+          title="Gym & child-safety considerations"
+          subtitle="Because Long Hill Chapel events may use the gym and involve minors"
+        />
+        <CardBody className="space-y-3">
+          <ul className="grid gap-1.5 text-sm text-gray-700 sm:grid-cols-2">
+            {GYM_SAFETY_ITEMS.map((item) => (
+              <li key={item} className="flex gap-2">
+                <span className="text-brand-500">☐</span>
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+          <p className="rounded-md bg-amber-50 p-3 text-sm text-amber-900">
+            This tool does not give legal advice. Church leaders should confirm insurance, waiver,
+            and child-safety requirements with appropriate church leadership, legal counsel, or
+            insurance advisors before hosting gym-based events.
+          </p>
+        </CardBody>
+      </Card>
 
       {sorted.length === 0 ? (
         <EmptyState

@@ -15,6 +15,8 @@ import {
   saveSpeaker,
   savePartner,
   saveFeedback,
+  getRoadmapByInitiative,
+  saveRoadmap,
 } from "./store";
 import {
   recommendLaunchPlan,
@@ -39,10 +41,11 @@ import type {
   Speaker,
   Partner,
   FeedbackEntry,
+  RoadmapBlock,
 } from "./types";
 import { listFeedbackByEvent, listContentByEvent } from "./store";
 
-const DEFAULT_CHURCH = "church_grace";
+const DEFAULT_CHURCH = "church_lhc";
 const DEFAULT_USER = "user_lead";
 
 // --- Initiatives ------------------------------------------------------------
@@ -293,6 +296,32 @@ export async function computeNextSteps(eventId: string) {
   const initiative = getInitiative(event.initiativeId)!;
   await recommendNextEvent(event, initiative, listFeedbackByEvent(eventId));
   revalidatePath(`/events/${eventId}/next-steps`);
+}
+
+// --- Roadmap Builder --------------------------------------------------------
+
+/**
+ * Persists the leader's working roadmap (full ordered block list + notes). The
+ * client owns add/reorder/edit/remove/template/custom interactions and sends
+ * the complete state here. No required sequence is enforced.
+ */
+export async function persistRoadmap(input: {
+  initiativeId: string;
+  templateName?: string;
+  notes?: string;
+  blocks: RoadmapBlock[];
+}): Promise<void> {
+  const existing = getRoadmapByInitiative(input.initiativeId);
+  saveRoadmap({
+    id: existing?.id ?? id("roadmap"),
+    initiativeId: input.initiativeId,
+    templateName: input.templateName,
+    notes: input.notes,
+    blocks: input.blocks,
+    updatedAt: now(),
+  });
+  revalidatePath("/roadmap");
+  revalidatePath("/roadmap/print");
 }
 
 // Re-export read helpers used by export route.

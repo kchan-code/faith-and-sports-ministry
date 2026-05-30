@@ -53,6 +53,17 @@ export function SpeakerPartnerForms({
   const [sContactEmail, setSContactEmail] = useState("");
   const [sStatus, setSStatus] = useState<SpeakerStatus>("prospect");
   const [sVettingNotes, setSVettingNotes] = useState("");
+  // NY/NJ sports-leader vetting fields
+  const [sRole, setSRole] = useState("");
+  const [sSport, setSSport] = useState("");
+  const [sRelationshipSource, setSRelationshipSource] = useState("");
+  const [sEventFit, setSEventFit] = useState("");
+  const [sFaithAlignment, setSFaithAlignment] = useState("");
+  const [sTopicFit, setSTopicFit] = useState("");
+  const [sAvailability, setSAvailability] = useState("");
+  const [sRiskConcerns, setSRiskConcerns] = useState("");
+  const [sFollowUpOwner, setSFollowUpOwner] = useState("");
+  const [sNotes, setSNotes] = useState("");
 
   // Partner form state
   const [pInitiative, setPInitiative] = useState(firstInitiative);
@@ -70,16 +81,27 @@ export function SpeakerPartnerForms({
       .split(",")
       .map((t) => t.trim())
       .filter((t) => t.length > 0);
+    const t = (v: string) => (v.trim() ? v.trim() : undefined);
     startTransition(async () => {
       await createSpeaker({
         initiativeId: sInitiative,
         name: sName.trim(),
         topicAreas,
         bio: sBio,
-        organization: sOrganization.trim() ? sOrganization.trim() : undefined,
-        contactEmail: sContactEmail.trim() ? sContactEmail.trim() : undefined,
+        organization: t(sOrganization),
+        contactEmail: t(sContactEmail),
         status: sStatus,
-        vettingNotes: sVettingNotes.trim() ? sVettingNotes.trim() : undefined,
+        vettingNotes: t(sVettingNotes),
+        role: t(sRole),
+        sport: t(sSport),
+        relationshipSource: t(sRelationshipSource),
+        eventFit: t(sEventFit),
+        faithAlignment: t(sFaithAlignment),
+        topicFit: t(sTopicFit),
+        availability: t(sAvailability),
+        riskConcerns: t(sRiskConcerns),
+        followUpOwner: t(sFollowUpOwner),
+        notes: t(sNotes),
       });
       setSName("");
       setSOrganization("");
@@ -88,6 +110,16 @@ export function SpeakerPartnerForms({
       setSContactEmail("");
       setSStatus("prospect");
       setSVettingNotes("");
+      setSRole("");
+      setSSport("");
+      setSRelationshipSource("");
+      setSEventFit("");
+      setSFaithAlignment("");
+      setSTopicFit("");
+      setSAvailability("");
+      setSRiskConcerns("");
+      setSFollowUpOwner("");
+      setSNotes("");
       router.refresh();
     });
   }
@@ -154,6 +186,26 @@ export function SpeakerPartnerForms({
                 onChange={(e) => setSOrganization(e.target.value)}
               />
             </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Role">
+                <input className={inputClass} value={sRole} onChange={(e) => setSRole(e.target.value)} placeholder="High school coach" />
+              </Field>
+              <Field label="Sport">
+                <input className={inputClass} value={sSport} onChange={(e) => setSSport(e.target.value)} placeholder="Soccer" />
+              </Field>
+            </div>
+            <Field label="Relationship source" hint="How does the church know them?">
+              <input className={inputClass} value={sRelationshipSource} onChange={(e) => setSRelationshipSource(e.target.value)} />
+            </Field>
+            <Field label="Event fit">
+              <input className={inputClass} value={sEventFit} onChange={(e) => setSEventFit(e.target.value)} placeholder="Coach Breakfast, Community Sports Panel" />
+            </Field>
+            <Field label="Topic fit">
+              <input className={inputClass} value={sTopicFit} onChange={(e) => setSTopicFit(e.target.value)} />
+            </Field>
+            <Field label="Faith alignment">
+              <textarea className={inputClass} rows={2} value={sFaithAlignment} onChange={(e) => setSFaithAlignment(e.target.value)} />
+            </Field>
             <Field label="Topic areas" hint="Comma-separated">
               <input
                 className={inputClass}
@@ -191,6 +243,9 @@ export function SpeakerPartnerForms({
                 ))}
               </select>
             </Field>
+            <Field label="Availability">
+              <input className={inputClass} value={sAvailability} onChange={(e) => setSAvailability(e.target.value)} />
+            </Field>
             <Field label="Vetting notes">
               <textarea
                 className={inputClass}
@@ -199,6 +254,17 @@ export function SpeakerPartnerForms({
                 onChange={(e) => setSVettingNotes(e.target.value)}
               />
             </Field>
+            <Field label="Risk concerns" hint="Minors, mental-health boundaries, self-promotion">
+              <textarea className={inputClass} rows={2} value={sRiskConcerns} onChange={(e) => setSRiskConcerns(e.target.value)} />
+            </Field>
+            <div className="grid grid-cols-2 gap-3">
+              <Field label="Follow-up owner">
+                <input className={inputClass} value={sFollowUpOwner} onChange={(e) => setSFollowUpOwner(e.target.value)} />
+              </Field>
+              <Field label="Notes">
+                <input className={inputClass} value={sNotes} onChange={(e) => setSNotes(e.target.value)} />
+              </Field>
+            </div>
             <Button type="submit" variant="primary">
               {isPending ? "Saving..." : "Add speaker"}
             </Button>

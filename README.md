@@ -1,9 +1,14 @@
 # Faith &amp; Sports Ministry — Planning System
 
-An **internal, AI-assisted ministry planning tool** for church leaders launching a
-community-facing **sports-family initiative**. It is *not* a family-facing chatbot — it is a
+An **internal, AI-assisted ministry planning tool** for **Long Hill Chapel (Chatham, NJ)** to
+launch a community-facing **sports-family ministry**. It is *not* a family-facing chatbot — it is a
 behind-the-scenes planning, content, logistics, and follow-up workspace for church staff and
 volunteers.
+
+The system is shaped around Long Hill Chapel's three assets: **pastoral and relational trust**, a
+**gym** for practical/embodied events, and member **access to NY/NJ sports leaders**. Its
+centerpiece is a flexible **Roadmap Builder** — reorderable, editable building blocks and multiple
+starter templates (no single required path) that export to a PDF for leadership discussion.
 
 > The goal: help a church **start from zero, launch one small high-impact meeting, learn from
 > it, and expand** into an ongoing sports-family ministry that serves families navigating
@@ -82,10 +87,11 @@ vercel --prod                                       # redeploy to pick them up
 
 ## Modules / screens
 
-Dashboard · Create Initiative · Recommended Launch Plan · Create Event · Event Agenda Builder ·
-Content Workspace · Theology Review Queue · Pastoral Safety Review Queue · Outreach Materials ·
-Volunteer Plan · Speaker/Partner Tracker · Event Feedback Form · Next-Step Recommendations ·
-Content Library · Export Center.
+Landing page · Dashboard · **Roadmap Builder** (+ PDF print/export) · Purpose · Create Initiative ·
+Recommended Launch Plan · Create Event · Event Agenda Builder · Content Workspace · Theology Review
+Queue · Pastoral Safety Review Queue (with gym & child-safety checklist) · Outreach Materials ·
+Volunteer Plan · Speaker/Partner Tracker (NY/NJ sports-leader vetting) · Event Feedback Form ·
+Next-Step Recommendations · Content Library · Export Center.
 
 ## Guardrails (non-negotiable)
 

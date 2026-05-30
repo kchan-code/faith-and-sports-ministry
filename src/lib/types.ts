@@ -270,8 +270,59 @@ export interface Speaker {
   status: SpeakerStatus;
   /** Vetting notes — alignment with church doctrine and tone. */
   vettingNotes?: string;
+  // --- NY/NJ sports-leader vetting fields ---
+  /** e.g. "High school coach", "Mental performance coach", "Athletic trainer". */
+  role?: string;
+  /** Sport(s) of focus. */
+  sport?: string;
+  /** How the church knows this person (member intro, partner, cold outreach). */
+  relationshipSource?: string;
+  /** Which event types this person fits. */
+  eventFit?: string;
+  /** Faith-alignment note (mission alignment, not hype or performance idolatry). */
+  faithAlignment?: string;
+  /** Topic fit for the ministry's focus areas. */
+  topicFit?: string;
+  availability?: string;
+  notes?: string;
+  /** Risk concerns — minors, mental-health boundaries, self-promotion. */
+  riskConcerns?: string;
+  /** Church leader who owns follow-up with this person. */
+  followUpOwner?: string;
   createdAt: string;
 }
+
+/** Suggested NY/NJ sports-leader speaker types for Long Hill Chapel. */
+export const SUGGESTED_SPEAKER_TYPES = [
+  "Local youth coaches",
+  "High school coaches",
+  "College coaches",
+  "Former college athletes",
+  "Former professional athletes",
+  "Mental performance coaches",
+  "Sports psychologists",
+  "Athletic trainers",
+  "Physical therapists",
+  "Strength and conditioning coaches",
+  "Club directors",
+  "Christian coaches",
+  "Sports parents with leadership experience",
+  "Family counselors",
+  "Youth pastors with sports experience",
+] as const;
+
+/** Every prospective speaker is evaluated against these criteria. */
+export const SPEAKER_VETTING_CRITERIA = [
+  "Mission alignment",
+  "Ability to serve families practically",
+  "Avoids hype or performance-idolatry language",
+  "Respects the church's theological center",
+  "Speaks to parents or athletes with humility",
+  "Makes no promises of athletic outcomes",
+  "No recruiting or self-promotion focus",
+  "Safe interaction with minors",
+  "Clear boundaries on mental health or family crisis",
+] as const;
 
 export type PartnerType = "school" | "club" | "league" | "nonprofit" | "business" | "ministry";
 export type PartnerStatus = "prospect" | "contacted" | "engaged" | "declined";
@@ -377,6 +428,52 @@ export interface Resource {
   sourceContentId?: string;
   approvedReviewIds: string[];
   createdAt: string;
+}
+
+// ---------------------------------------------------------------------------
+// Roadmap Builder (flexible, reorderable ministry building blocks)
+// ---------------------------------------------------------------------------
+
+export type RoadmapBlockCategory =
+  | "parent_event"
+  | "athlete_event"
+  | "coach_event"
+  | "family_event"
+  | "gym_based"
+  | "sports_leader"
+  | "church_leadership"
+  | "volunteer_training"
+  | "pastoral_care"
+  | "community_outreach"
+  | "follow_up"
+  | "custom";
+
+export interface RoadmapBlock {
+  /** Unique within a roadmap instance. */
+  id: string;
+  /** Library block id this came from (absent for custom blocks). */
+  sourceId?: string;
+  title: string;
+  description: string;
+  category: RoadmapBlockCategory;
+  custom: boolean;
+  /** Optional leader notes for this block in this roadmap. */
+  notes?: string;
+}
+
+/**
+ * A church's working ministry roadmap. Deliberately flexible — an ordered list
+ * of blocks the leader can reorder, edit, add to, and remove. No required path.
+ */
+export interface Roadmap {
+  id: string;
+  initiativeId: string;
+  /** Name of the starter template applied, if any (purely informational). */
+  templateName?: string;
+  blocks: RoadmapBlock[];
+  /** Free-form planning notes shown on the export. */
+  notes?: string;
+  updatedAt: string;
 }
 
 // ---------------------------------------------------------------------------

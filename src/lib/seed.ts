@@ -6,8 +6,11 @@ import type {
   Event,
   ContentItem,
   Review,
+  Speaker,
+  Roadmap,
 } from "./types";
 import { GROWTH_PATH_TEMPLATE } from "./agents/strategy-templates";
+import { TEMPLATE_BY_ID, BLOCK_BY_ID } from "./roadmap-library";
 
 /**
  * Seeds a believable starting state: one church, a few leaders, one initiative
@@ -18,39 +21,39 @@ export function seed(db: DB): void {
   const t = "2026-05-01T12:00:00.000Z";
 
   const church: Church = {
-    id: "church_grace",
-    name: "Grace Community Church",
-    city: "Plano",
-    state: "TX",
+    id: "church_lhc",
+    name: "Long Hill Chapel",
+    city: "Chatham",
+    state: "NJ",
     size: "medium",
-    denomination: "Non-denominational",
+    denomination: "Non-denominational evangelical",
     doctrineNotes:
-      "Evangelical, gospel-centered. Identity in Christ precedes performance. Avoid prosperity-gospel framing.",
+      "Evangelical, gospel-centered. Identity in Christ precedes performance. Avoid prosperity-gospel framing. Key assets: a gym for practical/embodied events, and member relationships with sports leaders across the NY/NJ area. The gym is a formation space, not a performance clinic.",
     createdAt: t,
   };
   db.churches.set(church.id, church);
 
   const users: User[] = [
-    { id: "user_pastor", churchId: church.id, name: "Pastor David Reyes", email: "david@gracecc.org", role: "pastor", createdAt: t },
-    { id: "user_admin", churchId: church.id, name: "Karen Liu", email: "karen@gracecc.org", role: "church_admin", createdAt: t },
-    { id: "user_lead", churchId: church.id, name: "Marcus Bell", email: "marcus@gracecc.org", role: "ministry_leader", createdAt: t },
-    { id: "user_director", churchId: church.id, name: "Tasha Owens", email: "tasha@gracecc.org", role: "event_director", createdAt: t },
-    { id: "user_reviewer", churchId: church.id, name: "Pastor Anne Cole", email: "anne@gracecc.org", role: "content_reviewer", createdAt: t },
-    { id: "user_vol", churchId: church.id, name: "Greg Park", email: "greg@gracecc.org", role: "volunteer_coordinator", createdAt: t },
-    { id: "user_speaker", churchId: church.id, name: "Nina Cruz", email: "nina@gracecc.org", role: "speaker_manager", createdAt: t },
+    { id: "user_pastor", churchId: church.id, name: "Pastor David Reyes", email: "david@longhillchapel.org", role: "pastor", createdAt: t },
+    { id: "user_admin", churchId: church.id, name: "Karen Liu", email: "karen@longhillchapel.org", role: "church_admin", createdAt: t },
+    { id: "user_lead", churchId: church.id, name: "Marcus Bell", email: "marcus@longhillchapel.org", role: "ministry_leader", createdAt: t },
+    { id: "user_director", churchId: church.id, name: "Tasha Owens", email: "tasha@longhillchapel.org", role: "event_director", createdAt: t },
+    { id: "user_reviewer", churchId: church.id, name: "Pastor Anne Cole", email: "anne@longhillchapel.org", role: "content_reviewer", createdAt: t },
+    { id: "user_vol", churchId: church.id, name: "Greg Park", email: "greg@longhillchapel.org", role: "volunteer_coordinator", createdAt: t },
+    { id: "user_speaker", churchId: church.id, name: "Nina Cruz", email: "nina@longhillchapel.org", role: "speaker_manager", createdAt: t },
   ];
   users.forEach((u) => db.users.set(u.id, u));
 
   const initiative: Initiative = {
     id: "init_sportsfamilies",
     churchId: church.id,
-    name: "Sports Families Initiative",
+    name: "Long Hill Chapel Sports Family Ministry",
     visionStatement:
-      "Serve the pressure-filled world of youth sports families in our community with practical care, building trust that opens the door to faith.",
+      "Long Hill Chapel can become a trusted place where sports families receive practical support, biblical hope, and relational care in the real pressures of youth sports — using the church's pastoral trust, its gym, and access to NY/NJ sports leaders.",
     focusAreas: ["pressure", "identity", "parenting", "faith", "character"],
     targetAudience: ["parents", "athletes", "coaches", "whole_families"],
     communityContext:
-      "Plano has a large competitive youth sports scene (hockey, soccer, baseball, gymnastics). Many families feel isolated and overwhelmed by travel-team demands.",
+      "Chatham and the surrounding NY/NJ suburbs have an intense competitive youth-sports culture (soccer, basketball, baseball, lacrosse, hockey). Long Hill Chapel has a gym for practical, family-friendly events and member relationships with coaches, trainers, and former athletes across the region.",
     status: "active",
     currentPhase: "phase_1_one_event",
     growthPath: GROWTH_PATH_TEMPLATE,
@@ -70,7 +73,7 @@ export function seed(db: DB): void {
     goal:
       "Give sports parents one practical, grace-filled tool for lowering pressure at home and on the sideline — and a warm first experience of our church.",
     date: "2026-06-20T18:30:00.000Z",
-    location: "Grace Community Church — Fellowship Hall",
+    location: "Long Hill Chapel — Gym",
     expectedAttendance: 40,
     status: "content_review",
     sessions: [
@@ -202,4 +205,51 @@ export function seed(db: DB): void {
     },
   ];
   reviews.forEach((r) => db.reviews.set(r.id, r));
+
+  // A starter roadmap (Parent-First Path) so the Roadmap Builder shows content
+  // on first load. Fully editable by leaders.
+  const template = TEMPLATE_BY_ID["parent_first"];
+  const roadmap: Roadmap = {
+    id: "roadmap_lhc",
+    initiativeId: initiative.id,
+    templateName: template.name,
+    blocks: template.blockIds.map((bid, i) => {
+      const lib = BLOCK_BY_ID[bid];
+      return {
+        id: `rb_${i + 1}`,
+        sourceId: lib.id,
+        title: lib.title,
+        description: lib.description,
+        category: lib.category,
+        custom: false,
+      };
+    }),
+    notes: "Drafted from the Parent-First template. Reorder, edit, add, or remove blocks to fit Long Hill Chapel's relationships, leadership capacity, gym availability, and community needs.",
+    updatedAt: t,
+  };
+  db.roadmaps.set(roadmap.id, roadmap);
+
+  // One vetted NY/NJ sports-leader example.
+  const speaker: Speaker = {
+    id: "speaker_sample",
+    initiativeId: initiative.id,
+    name: "Coach Mike Donnelly",
+    topicAreas: ["team culture", "pressure", "identity"],
+    bio: "Former Division I soccer player; now a high school coach in Morris County known for building resilient, low-shame team cultures.",
+    organization: "Chatham HS Athletics",
+    contactEmail: "",
+    status: "prospect",
+    role: "High school coach",
+    sport: "Soccer",
+    relationshipSource: "Introduced by a Long Hill Chapel parent on the team",
+    eventFit: "Coach Breakfast, Community Sports Panel",
+    faithAlignment: "Believer; comfortable keeping the mission Christ-centered without hype.",
+    topicFit: "Team culture, correction without shame, athlete formation",
+    availability: "Weekday mornings; off-season preferred",
+    vettingNotes: "Member-referred; needs a vetting conversation before confirming.",
+    riskConcerns: "Confirm boundaries if athletes/minors attend; no recruiting talk.",
+    followUpOwner: "Nina Cruz",
+    createdAt: t,
+  };
+  db.speakers.set(speaker.id, speaker);
 }

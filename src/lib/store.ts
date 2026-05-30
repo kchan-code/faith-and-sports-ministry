@@ -12,6 +12,7 @@ import type {
   FeedbackEntry,
   FollowUpPlan,
   Resource,
+  Roadmap,
   AgentOutput,
 } from "./types";
 import { seed } from "./seed";
@@ -39,6 +40,7 @@ export interface DB {
   feedback: Map<string, FeedbackEntry>;
   followUps: Map<string, FollowUpPlan>;
   resources: Map<string, Resource>;
+  roadmaps: Map<string, Roadmap>;
   agentOutputs: Map<string, AgentOutput>;
 }
 
@@ -57,6 +59,7 @@ function freshDB(): DB {
     feedback: new Map(),
     followUps: new Map(),
     resources: new Map(),
+    roadmaps: new Map(),
     agentOutputs: new Map(),
   };
 }
@@ -178,6 +181,14 @@ export const saveFollowUp = (f: FollowUpPlan) => {
 export const listResources = () => all(db.resources);
 export const saveResource = (r: Resource) => {
   db.resources.set(r.id, r);
+  return r;
+};
+
+// Roadmaps -------------------------------------------------------------------
+export const getRoadmapByInitiative = (initiativeId: string) =>
+  all(db.roadmaps).find((r) => r.initiativeId === initiativeId);
+export const saveRoadmap = (r: Roadmap) => {
+  db.roadmaps.set(r.id, r);
   return r;
 };
 

@@ -84,6 +84,7 @@ type ButtonProps = {
   type?: "button" | "submit";
   className?: string;
   disabled?: boolean;
+  onClick?: () => void;
 };
 
 const BUTTON_VARIANTS = {
@@ -93,11 +94,12 @@ const BUTTON_VARIANTS = {
   danger: "bg-rose-600 text-white hover:bg-rose-700",
 };
 
-export function Button({ children, variant = "primary", type = "button", className = "", disabled }: ButtonProps) {
+export function Button({ children, variant = "primary", type = "button", className = "", disabled, onClick }: ButtonProps) {
   return (
     <button
       type={type}
       disabled={disabled}
+      onClick={onClick}
       className={`inline-flex items-center justify-center gap-1.5 rounded-lg px-3.5 py-2 text-sm font-medium transition disabled:opacity-50 ${BUTTON_VARIANTS[variant]} ${className}`}
     >
       {children}

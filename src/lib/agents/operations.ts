@@ -59,14 +59,14 @@ Audience: ${initiative.targetAudience.join(", ")}
 Recommend ONE small high-impact first event, why it should be first, and the phased growth path.`,
     offlineDraft: (): LaunchPlan => ({
       recommendation:
-        "Start with one small parents' workshop. The goal of the first event is trust and one practical takeaway — not attendance. Learn from it, then expand.",
+        "Start with one small parents' workshop hosted at Long Hill Chapel. The goal of the first event is trust and one practical takeaway — not attendance. Use the gym and NY/NJ sports-leader relationships as you grow, but keep the path flexible — these are options, not a required order.",
       firstEvent: {
-        title: "When the Game Gets Loud: A Parents' Night for Sports Families",
+        title: "Beyond the Scoreboard: A Parents' Night at Long Hill Chapel",
         type: "parent_workshop",
         goal: "Give sports parents one practical, grace-filled tool for lowering pressure at home and on the sideline.",
         audience: "parents",
         whyThisFirst:
-          "Parents are the easiest first audience to reach, the most stressed, and the gateway to serving athletes and whole families later.",
+          "Parents are the easiest first audience to reach, the most stressed, and the gateway to serving athletes and whole families later. Later blocks can add gym-based athlete workshops and trusted NY/NJ sports-leader events.",
       },
       growthPath: GROWTH_PATH_TEMPLATE.map((g) => ({
         title: g.title,

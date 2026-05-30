@@ -7,9 +7,9 @@ const NAV: { group: string; items: { href: string; label: string }[] }[] = [
   {
     group: "Plan",
     items: [
-      { href: "/", label: "Dashboard" },
+      { href: "/dashboard", label: "Dashboard" },
+      { href: "/roadmap", label: "Roadmap Builder" },
       { href: "/initiatives", label: "Initiatives" },
-      { href: "/initiatives/new", label: "Create Initiative" },
       { href: "/events", label: "Events" },
     ],
   },
@@ -25,6 +25,7 @@ const NAV: { group: string; items: { href: string; label: string }[] }[] = [
     group: "Engage",
     items: [
       { href: "/speakers", label: "Speakers & Partners" },
+      { href: "/purpose", label: "Purpose" },
       { href: "/agents", label: "Agents" },
       { href: "/export", label: "Export Center" },
     ],
@@ -34,10 +35,10 @@ const NAV: { group: string; items: { href: string; label: string }[] }[] = [
 export function Sidebar() {
   const pathname = usePathname();
   return (
-    <aside className="hidden w-60 shrink-0 border-r border-slate-200 bg-white px-3 py-5 lg:block">
+    <aside className="hidden w-60 shrink-0 border-r border-slate-200 bg-white px-3 py-5 lg:block print:!hidden">
       <Link href="/" className="mb-6 block px-2">
-        <div className="text-sm font-bold leading-tight text-brand-700">Faith &amp; Sports</div>
-        <div className="text-xs text-ink-muted">Ministry Planning</div>
+        <div className="text-sm font-bold leading-tight text-brand-700">Long Hill Chapel</div>
+        <div className="text-xs text-ink-muted">Sports Family Ministry</div>
       </Link>
       <nav className="space-y-5">
         {NAV.map((section) => (
