@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-sans: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  @apply bg-slate-50 text-ink antialiased;
+}
+
+/* Lightweight prose styling for rendered Markdown content. */
+.prose-ministry h1 { @apply text-xl font-bold mt-4 mb-2; }
+.prose-ministry h2 { @apply text-lg font-semibold mt-4 mb-1.5; }
+.prose-ministry h3 { @apply text-base font-semibold mt-3 mb-1; }
+.prose-ministry p { @apply my-2 leading-relaxed; }
+.prose-ministry ul { @apply list-disc pl-5 my-2 space-y-1; }
+.prose-ministry ol { @apply list-decimal pl-5 my-2 space-y-1; }
+.prose-ministry blockquote { @apply border-l-4 border-brand-200 pl-3 italic text-ink-muted my-2; }
+.prose-ministry code { @apply bg-slate-100 px-1 py-0.5 rounded text-sm; }
+.prose-ministry strong { @apply font-semibold; }
+.prose-ministry hr { @apply my-4 border-slate-200; }
